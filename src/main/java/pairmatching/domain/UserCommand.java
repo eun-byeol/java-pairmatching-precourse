@@ -1,6 +1,6 @@
 package pairmatching.domain;
 
-import pairmatching.enums.Command;
+import pairmatching.enums.CommandType;
 
 public class UserCommand {
     private final String command;
@@ -11,7 +11,7 @@ public class UserCommand {
     }
 
     private void validateCommandType(String codeName) throws IllegalArgumentException{
-        Command.selectCommandByCodeName(codeName);
+        CommandType.selectCommandByCodeName(codeName);
     }
 
     public String getCommand() {
