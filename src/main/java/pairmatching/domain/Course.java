@@ -1,13 +1,20 @@
 package pairmatching.domain;
 
+import pairmatching.enums.CourseType;
+
 import java.util.List;
 
 public class Course {
     private final List<String> crewNames;
-    private final String name;
+    private final String courseName;
 
-    public Course(List<String> crewNames, String name) {
+    public Course(List<String> crewNames, String courseName) {
         this.crewNames = crewNames;
-        this.name = name;
+        validateCourseType(courseName);
+        this.courseName = courseName;
+    }
+
+    private void validateCourseType(String courseName) throws IllegalArgumentException{
+        CourseType.selectCourseByName(courseName);
     }
 }
