@@ -14,7 +14,6 @@ public class Level {
         this.levelType = levelType;
         this.missions = new HashMap<>();
         setUpMissions();
-//        validateLevelType(levelType);
     }
 
     private void setUpMissions() {
@@ -24,7 +23,11 @@ public class Level {
         }
     }
 
-//    private void validateLevelType(String name) throws IllegalArgumentException{
+    public HashMap<String, Mission> getMissions() {
+        return missions;
+    }
+
+    //    private void validateLevelType(String name) throws IllegalArgumentException{
 //        LevelType.selectLevelTypeByName(name);
 //    }
 }
