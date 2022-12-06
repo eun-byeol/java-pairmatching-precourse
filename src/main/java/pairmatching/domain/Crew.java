@@ -1,13 +1,13 @@
-//package pairmatching.domain;
-//
-//import pairmatching.;
-//
-//public class Crew {
-//    private Course course;
-//    private String name;
-//
-//    public Crew(Course course, String name) {
-//        this.course = course;
-//        this.name = name;
-//    }
-//}
+package pairmatching.domain;
+
+import pairmatching.enums.CourseType;
+
+public class Crew {
+    private CourseType courseType;
+    private String name;
+
+    public Crew(CourseType courseType, String name) {
+        this.courseType = courseType;
+        this.name = name;
+    }
+}
