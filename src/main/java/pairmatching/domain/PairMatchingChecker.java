@@ -7,10 +7,10 @@ public class PairMatchingChecker {
     public boolean checkDuplication(Level level, List<List<String>> matchingResult) {
         for (String key : level.getMissions().keySet()) {
             if (isDuplicateResultInMission(level.getMissions().get(key), matchingResult)) {
-                return false;
+                return true;
             }
         }
-        return true;
+        return false;
     }
 
     private boolean isDuplicateResultInMission(Mission mission, List<List<String>> matchingResult) {
@@ -33,18 +33,4 @@ public class PairMatchingChecker {
         }
         return false;
     }
-
-//    public static void main(String[] args) {
-//        List<List<String>> prev = Arrays.asList(
-//                Arrays.asList("용팔", "대만"),
-//                Arrays.asList("대협", "덕규"),
-//                Arrays.asList("치수", "준호")
-//        );
-//        List<List<String>> cur = Arrays.asList(
-//                Arrays.asList("태웅", "백호"),
-//                Arrays.asList("달재", "태산"),
-//                Arrays.asList("대만", "덕규")
-//        );
-//        System.out.println(new PairMatchingChecker().isDuplicate(prev, cur));
-//    }
 }
