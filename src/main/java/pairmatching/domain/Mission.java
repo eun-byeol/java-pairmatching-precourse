@@ -15,4 +15,17 @@ public class Mission {
         this.isMatching = false;
         this.matchingResult = new ArrayList<>();
     }
+
+    public void setMatchingResult(List<List<String>> matchingResult) {
+        this.matchingResult = matchingResult;
+        this.isMatching = true;
+    }
+
+    public boolean isMatching() {
+        return isMatching;
+    }
+
+    public List<List<String>> getMatchingResult() {
+        return matchingResult;
+    }
 }
