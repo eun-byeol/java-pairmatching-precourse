@@ -10,10 +10,21 @@ public class Controller {
     public void run() {
         PairMatchingProgram pairMatchingProgram = new PairMatchingProgram();
 
-        UserCommand command = new UserCommand(readProgramCommand());
+        UserCommand command = inputUserCommand();
+
         String userInput = readCourseAndLevelAndMission();
         String[] inputs = userInput.split(", ");
         for (String input : inputs) {
+        }
+    }
+
+    private UserCommand inputUserCommand() {
+        while(true) {
+            try {
+                return new UserCommand(readProgramCommand());
+            } catch (IllegalArgumentException e) {
+                System.out.println(e.getMessage());
+            }
         }
     }
 }
