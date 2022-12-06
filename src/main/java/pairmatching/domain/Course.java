@@ -28,6 +28,10 @@ public class Course {
         return crewNames;
     }
 
+    public HashMap<String, Level> getLevels() {
+        return levels;
+    }
+
     //    private void validateCourseType(CourseType courseName) throws IllegalArgumentException{
 //        CourseType.selectCourseByName(courseName);
 //    }
