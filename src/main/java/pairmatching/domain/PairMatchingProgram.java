@@ -16,8 +16,8 @@ public class PairMatchingProgram {
     private PairMatchingChecker pairMatchingChecker;
 
     public PairMatchingProgram() {
-        CourseType backend = CourseType.valueOf("BACKEND");
-        CourseType frontend = CourseType.valueOf("FRONTEND");
+        CourseType backend = CourseType.BACKEND;
+        CourseType frontend = CourseType.FRONTEND;
         try {
             this.backendCourse = new Course(
                     ReadFile.readFileAndReturnNameList(backend.getPath()),
@@ -34,11 +34,19 @@ public class PairMatchingProgram {
         this.pairMatchingChecker = new PairMatchingChecker();
     }
 
-    public List<List<String>> runPairMatching(String course, String level, String mission) throws Exception {
+    public boolean checkIsExistResult(UserOptionCommand inputs) {
+        Course currentCourse = selectCourseType(inputs.getCourse());
+        Level currentLevel = currentCourse.getLevels().get(inputs.getLevel().getName());
+        Mission currentMission = currentLevel.getMissions().get(inputs.getMission().getName());
+
+        return pairMatchingChecker.isExistMatchingResult(currentMission);
+    }
+
+    public List<List<String>> runPairMatching(UserOptionCommand inputs) throws Exception {
         int count = 0;
-        Course currentCourse = selectCourseType(course);
-        Level currentLevel = currentCourse.getLevels().get(level);
-        Mission currentMission = currentLevel.getMissions().get(mission);
+        Course currentCourse = selectCourseType(inputs.getCourse());
+        Level currentLevel = currentCourse.getLevels().get(inputs.getLevel().getName());
+        Mission currentMission = currentLevel.getMissions().get(inputs.getMission().getName());
         List<String> crewNames = currentCourse.getCrewNames();
 
         while (count < 3) {
@@ -52,8 +60,8 @@ public class PairMatchingProgram {
         throw new Exception(MATCHING_FAIL);
     }
 
-    private Course selectCourseType(String course) {
-        if (CourseType.valueOf("BACKEND").getName().equals(course)) {
+    private Course selectCourseType(CourseType course) {
+        if (CourseType.BACKEND.equals(course)) {
             return this.backendCourse;
         }
         return this.frontendCourse;
