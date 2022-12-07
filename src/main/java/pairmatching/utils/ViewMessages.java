@@ -7,7 +7,7 @@ public class ViewMessages {
             "3. 페어 초기화\n" +
             "Q. 종료";
 
-    public static final String INPUT_COURSE_AND_MISSION = "#############################################\n" +
+    public static final String INPUT_COURSE_AND_MISSION = "\n#############################################\n" +
             "과정: 백엔드 | 프론트엔드\n" +
             "미션:\n" +
             "  - 레벨1: 자동차경주 | 로또 | 숫자야구게임\n" +
@@ -20,9 +20,11 @@ public class ViewMessages {
     public static final String INPUT_COURSE_LEVEL_MISSION = "과정, 레벨, 미션을 선택하세요.\n" +
             "ex) 백엔드, 레벨1, 자동차경주";
 
-    public static final String INPUT_REMATCHING = "매칭 정보가 있습니다. 다시 매칭하시겠습니까?\n" +
+    public static final String INPUT_REMATCHING = "\n매칭 정보가 있습니다. 다시 매칭하시겠습니까?\n" +
             "네 | 아니오";
 
-    public static final String OUTPUT_MATCHING_RESULT = "페어 매칭 결과입니다.";
+    public static final String OUTPUT_MATCHING_RESULT = "\n페어 매칭 결과입니다.";
     public static final String OUTPUT_SEPARATOR = " : ";
+
+    public static final String OUTPUT_RESET = "\n초기화 되었습니다.\n";
 }
