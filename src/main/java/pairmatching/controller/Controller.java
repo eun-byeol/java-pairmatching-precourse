@@ -1,9 +1,7 @@
 package pairmatching.controller;
 
-import pairmatching.domain.PairMatchingProgram;
-import pairmatching.domain.UserCommand;
+import pairmatching.domain.*;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import static pairmatching.view.InputView.*;
@@ -30,24 +28,7 @@ public class Controller {
 
     private void ExecuteCommand(UserCommand command, PairMatchingProgram pairMatchingProgram) {
         if (command.getCommand().equals("1")) {
-            System.out.println("1");
-            String userInput = readCourseAndLevelAndMission();
-            String[] inputs = userInput.split(",");
-            List<String> inputList = new ArrayList<>();
-            for (String input : inputs) {
-                inputList.add(input.trim());
-            }
-            try {
-                List<List<String>> result = pairMatchingProgram.runPairMatching(
-                        inputList.get(0),
-                        inputList.get(1),
-                        inputList.get(2)
-                );
-                printPairMatchingResult(result);
-                return;
-            } catch (Exception e){
-                System.out.println(e.getMessage());
-            }
+            executePairMatching(pairMatchingProgram);
         }
         if (command.getCommand().equals("2")) {
 
@@ -57,6 +38,44 @@ public class Controller {
         }
         if (command.getCommand().equals("Q")) {
             this.isStop = true;
+        }
+    }
+
+    public void executePairMatching(PairMatchingProgram pairMatchingProgram) {
+        UserOptionCommand userOptionCommand = inputUserOptions();
+        try {
+            if (pairMatchingProgram.checkIsExistResult(userOptionCommand)) {
+                UserRematchingCommand rematchingCommand = inputRematchingCommand();
+                if (!rematchingCommand.getIsRematching()) {
+                    //출력
+                    return;
+                }
+            }
+            List<List<String>> result = pairMatchingProgram.runPairMatching(userOptionCommand);
+            printPairMatchingResult(result);
+            return;
+        } catch (Exception e){
+            System.out.println(e.getMessage());
+        }
+    }
+
+    private UserOptionCommand inputUserOptions() {
+        while(true) {
+            try {
+                return new UserOptionCommand(readCourseAndLevelAndMission());
+            } catch (IllegalArgumentException e) {
+                System.out.println(e.getMessage());
+            }
+        }
+    }
+
+    private UserRematchingCommand inputRematchingCommand() {
+        while(true) {
+            try {
+                return new UserRematchingCommand(readRematching());
+            } catch (IllegalArgumentException e) {
+                System.out.println(e.getMessage());
+            }
         }
     }
 }
