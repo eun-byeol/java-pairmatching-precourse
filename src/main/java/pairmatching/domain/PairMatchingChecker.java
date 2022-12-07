@@ -4,6 +4,9 @@ import java.util.List;
 import java.util.TreeSet;
 
 public class PairMatchingChecker {
+    public boolean isExistMatchingResult(Mission mission) {
+        return mission.getIsMatching();
+    }
     public boolean checkDuplication(Level level, List<List<String>> matchingResult) {
         for (String key : level.getMissions().keySet()) {
             if (isDuplicateResultInMission(level.getMissions().get(key), matchingResult)) {
@@ -14,7 +17,7 @@ public class PairMatchingChecker {
     }
 
     private boolean isDuplicateResultInMission(Mission mission, List<List<String>> matchingResult) {
-        if (!mission.isMatching()) {
+        if (!isExistMatchingResult(mission)) {
             return false;
         }
         List<List<String>> previousResult = mission.getMatchingResult();
