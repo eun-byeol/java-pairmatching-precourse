@@ -7,6 +7,8 @@ import pairmatching.enums.MissionType;
 import java.util.ArrayList;
 import java.util.List;
 
+import static pairmatching.utils.ErrorMessages.*;
+
 public class UserOptionCommand {
     private final CourseType course;
     private final LevelType level;
@@ -36,7 +38,13 @@ public class UserOptionCommand {
     }
 
     private MissionType validateMissionType(String input) throws IllegalArgumentException{
-        return MissionType.selectMissionTypeByName(input);
+        List<MissionType> missions = level.getMissions();
+        for (MissionType mission : missions) {
+            if (mission.getName().equals(input)) {
+                return mission;
+            }
+        }
+        throw new IllegalArgumentException(MISSION_NOT_OPTIONS);
     }
 
     public CourseType getCourse() {
