@@ -1,6 +1,7 @@
 package pairmatching.controller;
 
 import pairmatching.domain.*;
+import pairmatching.enums.CommandType;
 
 import java.util.List;
 
@@ -8,11 +9,12 @@ import static pairmatching.view.InputView.*;
 import static pairmatching.view.OutputView.*;
 
 public class Controller {
+    private PairMatchingProgram pairMatchingProgram;
     private boolean isStop = false;
     public void run() {
-        PairMatchingProgram pairMatchingProgram = new PairMatchingProgram();
+        this.pairMatchingProgram = new PairMatchingProgram();
         while (!isStop) {
-            ExecuteCommand(inputUserCommand(), pairMatchingProgram);
+            ExecuteCommand(inputUserCommand());
         }
     }
 
@@ -26,34 +28,37 @@ public class Controller {
         }
     }
 
-    private void ExecuteCommand(UserCommand command, PairMatchingProgram pairMatchingProgram) {
-        if (command.getCommand().equals("1")) {
-            executePairMatching(pairMatchingProgram);
+    private void ExecuteCommand(UserCommand command) {
+        if (command.getCommand().equals(CommandType.PAIR_MATCHING.getCodeName())) {
+            executePairMatching();
         }
-        if (command.getCommand().equals("2")) {
-
+        if (command.getCommand().equals(CommandType.PAIR_LOOKUP.getCodeName())) {
+            executeLookUp();
         }
-        if (command.getCommand().equals("2")) {
-
+        if (command.getCommand().equals(CommandType.PAIR_RESET.getCodeName())) {
+            executeReset();
         }
-        if (command.getCommand().equals("Q")) {
+        if (command.getCommand().equals(CommandType.QUIT.getCodeName())) {
             this.isStop = true;
         }
     }
 
-    public void executePairMatching(PairMatchingProgram pairMatchingProgram) {
+    public void executePairMatching() {
         UserOptionCommand userOptionCommand = inputUserOptions();
         try {
             if (pairMatchingProgram.checkIsExistResult(userOptionCommand)) {
                 UserRematchingCommand rematchingCommand = inputRematchingCommand();
                 if (!rematchingCommand.getIsRematching()) {
-                    //출력
+                    try {
+                        printPairMatchingResult(pairMatchingProgram.pairLookUp(userOptionCommand));
+                    } catch (Exception e) {
+                        System.out.println(e.getMessage());
+                    }
                     return;
                 }
             }
             List<List<String>> result = pairMatchingProgram.runPairMatching(userOptionCommand);
             printPairMatchingResult(result);
-            return;
         } catch (Exception e){
             System.out.println(e.getMessage());
         }
@@ -77,5 +82,19 @@ public class Controller {
                 System.out.println(e.getMessage());
             }
         }
+    }
+
+    private void executeLookUp() {
+        UserOptionCommand userOptionCommand = inputUserOptions();
+        try {
+            printPairMatchingResult(pairMatchingProgram.pairLookUp(userOptionCommand));
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+    }
+
+    private void executeReset() {
+        this.pairMatchingProgram = new PairMatchingProgram();
+        printProgramReset();
     }
 }
