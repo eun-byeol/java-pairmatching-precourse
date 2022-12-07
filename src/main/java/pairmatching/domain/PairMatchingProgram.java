@@ -6,7 +6,7 @@ import pairmatching.utils.ReadFile;
 import java.io.IOException;
 import java.util.List;
 
-import static pairmatching.utils.ErrorMessages.MATCHING_FAIL;
+import static pairmatching.utils.ErrorMessages.*;
 
 public class PairMatchingProgram {
     private Course backendCourse;
@@ -14,6 +14,10 @@ public class PairMatchingProgram {
 
     private PairMatchingMaker pairMatchingMaker;
     private PairMatchingChecker pairMatchingChecker;
+
+    private Course currentCourse;
+    private Level currentLevel;
+    private Mission currentMission;
 
     public PairMatchingProgram() {
         CourseType backend = CourseType.BACKEND;
@@ -34,19 +38,27 @@ public class PairMatchingProgram {
         this.pairMatchingChecker = new PairMatchingChecker();
     }
 
-    public boolean checkIsExistResult(UserOptionCommand inputs) {
-        Course currentCourse = selectCourseType(inputs.getCourse());
-        Level currentLevel = currentCourse.getLevels().get(inputs.getLevel().getName());
-        Mission currentMission = currentLevel.getMissions().get(inputs.getMission().getName());
+    private void setCurrent(UserOptionCommand inputs) {
+        this.currentCourse = selectCourseType(inputs.getCourse());
+        this.currentLevel = currentCourse.getLevels().get(inputs.getLevel().getName());
+        this.currentMission = currentLevel.getMissions().get(inputs.getMission().getName());
+    }
 
+    private Course selectCourseType(CourseType course) {
+        if (CourseType.BACKEND.equals(course)) {
+            return this.backendCourse;
+        }
+        return this.frontendCourse;
+    }
+
+    public boolean checkIsExistResult(UserOptionCommand inputs) {
+        setCurrent(inputs);
         return pairMatchingChecker.isExistMatchingResult(currentMission);
     }
 
     public List<List<String>> runPairMatching(UserOptionCommand inputs) throws Exception {
         int count = 0;
-        Course currentCourse = selectCourseType(inputs.getCourse());
-        Level currentLevel = currentCourse.getLevels().get(inputs.getLevel().getName());
-        Mission currentMission = currentLevel.getMissions().get(inputs.getMission().getName());
+        setCurrent(inputs);
         List<String> crewNames = currentCourse.getCrewNames();
 
         while (count < 3) {
@@ -60,10 +72,10 @@ public class PairMatchingProgram {
         throw new Exception(MATCHING_FAIL);
     }
 
-    private Course selectCourseType(CourseType course) {
-        if (CourseType.BACKEND.equals(course)) {
-            return this.backendCourse;
+    public List<List<String>> pairLookUp(UserOptionCommand inputs) throws Exception {
+        if (checkIsExistResult(inputs)) {
+            return currentMission.getMatchingResult();
         }
-        return this.frontendCourse;
+        throw new Exception(NO_MATCHING_HISTORY);
     }
 }
