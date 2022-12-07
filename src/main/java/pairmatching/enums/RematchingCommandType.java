@@ -5,7 +5,7 @@ import java.util.Arrays;
 import static pairmatching.utils.ErrorMessages.*;
 
 public enum RematchingCommandType {
-    YES("예", true),
+    YES("네", true),
     NO("아니오", false);
 
     private String command;
