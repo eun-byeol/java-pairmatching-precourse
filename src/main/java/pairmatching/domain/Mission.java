@@ -21,7 +21,7 @@ public class Mission {
         this.isMatching = true;
     }
 
-    public boolean isMatching() {
+    public boolean getIsMatching() {
         return isMatching;
     }
 
